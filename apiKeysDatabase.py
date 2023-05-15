@@ -11,7 +11,7 @@ class ApiKeysDatabase:
         self.database = database
         self.user = user
         self.password = password
-
+        self.connect()
     def connect(self):
         try:
             conn = psycopg2.connect(
@@ -21,7 +21,9 @@ class ApiKeysDatabase:
                 user=self.user,
                 password=self.password
             )
+            print("****Conneted***")
             return conn
+        
         except psycopg2.Error as e:
             print(f"Error connecting to database: {e}")
             return None
