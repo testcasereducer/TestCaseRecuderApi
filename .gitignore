@@ -13,9 +13,6 @@ test_api.py
 test_email.py
 token.json
 
-# Ignorar archivos de configuración específicos del entorno
-.env
-.env.*
 
 # Ignorar archivos y directorios generados por IDEs o editores de texto
 .vscode/
