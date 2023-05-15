@@ -6,6 +6,7 @@ __pycache__/
 
 # Ignorar el directorio virtualenv (si se utiliza)
 venv/
+venv-api/
 
 #ignorar archivos de prueba
 test_api.py
