@@ -1,0 +1,42 @@
+# Ignorar archivos y directorios generados automáticamente
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar el directorio virtualenv (si se utiliza)
+venv/
+
+#ignorar archivos de prueba
+test_api.py
+test_email.py
+token.json
+
+# Ignorar archivos de configuración específicos del entorno
+.env
+.env.*
+
+# Ignorar archivos y directorios generados por IDEs o editores de texto
+.vscode/
+.idea/
+*.sublime-*
+
+# Ignorar archivos de registro y salida
+*.log
+*.out
+
+# Ignorar archivos y directorios generados por herramientas de construcción
+/build/
+/dist/
+
+# Ignorar archivos y directorios generados por pruebas unitarias y cobertura de código
+.coverage
+htmlcov/
+
+# Ignorar archivos y directorios específicos de la aplicación Flask
+instance/
+
+# Ignorar archivos y directorios generados por el servidor de desarrollo Flask
+*.pid
+*.sock
+*.driver.py
