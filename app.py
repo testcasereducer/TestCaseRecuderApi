@@ -48,7 +48,8 @@ origins = [
     "http://127.0.0.1:3000",
     "http://127.0.0.1:8000",
     "https://test-case-recuder-front-end.vercel.app",
-    "test-case-recuder-front-end-git-main-testcasereducer.vercel.app"
+    "test-case-recuder-front-end-git-main-testcasereducer.vercel.app",
+    "https://test-case-recuder-front-25xphy323-testcasereducer.vercel.app"
 ]
 
 app.add_middleware(
