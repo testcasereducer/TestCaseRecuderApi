@@ -44,18 +44,19 @@ class OrthogonalArray:
             if value['levels'] == self.__max_level and self.__num_factors <= value['factors']:
                 return key, value['array']
                 
-        raise ValueError(f'No orthogonal array for {self.__err_get_L()}')
+        raise ValueError(f'No hay arreglo ortogonal para {self.__err_get_L()}')
      
     def __valide_parameteres(self):
         for key, value in self.__parameters.items():
             if key is None:
-                raise ValueError(f'Invalid key {key}')
+                raise ValueError(f'Clave inválida {key}')
             if type(value) != list:
-                raise ValueError(f'The value of {key} is not a list.')
+                raise ValueError(f'El valor de {key} no es una lista.')
             if len(value) == 0:
-                raise ValueError(f'El value len of {key} must bet aleast 1.')
+                raise ValueError(f'La longitud del valor de {key} debe ser al menos 1.')
             if None in value:
-                raise ValueError(f'The values of {key} must be diferent to None.')
+                raise ValueError(f'Los valores de {key} deben ser diferentes de None.')
+
 
 
     def build_test_cases(self):

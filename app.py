@@ -95,6 +95,9 @@ async def process_request(request: Request):
             test_cases = LimitValueAnalysis(parameters).build_test_cases()
         elif technique == 'OA':
             test_cases = OrthogonalArray(parameters).build_test_cases()
+        else:
+            raise Exception(f"No se encontró la técnica: {technique}.")
+        
         response = {
             'error' : False,
             'technique': technique,

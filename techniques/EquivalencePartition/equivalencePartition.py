@@ -39,8 +39,8 @@ class EquivalencePartition(object):
         self.__filter_func = filter_func
         self.__n = len(parameters)
 
-        assert callable(self.__filter_func), 'The filter function must be a function.'
-        assert self.__n >= 2,   'The number of parameters must be at least 2.'
+        assert callable(self.__filter_func), 'El filtro debe ser una función.'
+        assert self.__n >= 2,   'El número de parámetros debe ser mayor o igual a 2.'
 
         self.__valid_parameters()
         
@@ -97,7 +97,7 @@ class EquivalencePartition(object):
             invalid_test_cases = self.__generate_invalid_test_cases()
             tests = {'valids' : valid_test_cases, 'invalids' : invalid_test_cases}
         except Exception as e:
-            raise Exception(f'Error generating test cases: {e}')
+            raise Exception(f'Error generando los casos de prueba: {e}')
 
         return tests
 
@@ -116,15 +116,15 @@ class EquivalencePartition(object):
         """
         for var in self.__parameters:
             try:
-                assert len(self.__parameters[var].keys()) > 0, 'There are no equivalence classes'
+                assert len(self.__parameters[var].keys()) > 0, 'No hay clases de equivalencia.'
                 for equiv_class_name in self.__parameters[var]:
                     equiv_class = self.__parameters[var][equiv_class_name]
-                    assert equiv_class.get('valid') != None, f'The valid of `{equiv_class_name}` is None.'
-                    assert type(equiv_class['valid']) == bool, f'The valid type in `{equiv_class_name}` is not a boolean.'
-                    assert equiv_class.get('value') != None, f'The value of `{equiv_class_name}` is None.'
-                    assert equiv_class['value'] != "", f'The value of `{equiv_class_name}` is Empty.'
+                    assert equiv_class.get('valid') != None, f'`El valor "es valido" de {equiv_class_name}` es None.'
+                    assert type(equiv_class['valid']) == bool, f'El tipo "es valido: de `{equiv_class_name}` no es un boolean.'
+                    assert equiv_class.get('value') != None, f'El valor de `{equiv_class_name}` es None.'
+                    assert equiv_class['value'] != "", f'El valor de `{equiv_class_name}` es vacio.'
             except AssertionError as e:
-                raise AssertionError(F'Error in `{var}`: {e}')
+                raise AssertionError(F'Error en `{var}`: {e}')
 
     def __generate_valid_test_cases(self): 
         
