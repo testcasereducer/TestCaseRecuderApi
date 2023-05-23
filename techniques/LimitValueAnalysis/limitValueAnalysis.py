@@ -76,20 +76,20 @@ class LimitValueAnalysis:
                     lambda_str = value['lambda']
                     delta = value['delta']
                 except KeyError:
-                    raise KeyError('Invalid parameter')
+                    raise KeyError('Parámetro inválido. ')
                 
                 if type(lambda_str) != str:
-                    raise TypeError(f'Incorrect type {key}:{lambda_str}')
+                    raise TypeError(f'Tipo incorrecto {key}:{lambda_str}')
                 if len(lambda_str) < LimitValueAnalysis.MIN_OPT_SIZE:
-                    raise ValueError(f'The lambda of {key} must be less than {LimitValueAnalysis.MIN_OPT_SIZE}')
+                    raise ValueError(f'El lambda de {key} debe ser almenos de {LimitValueAnalysis.MIN_OPT_SIZE}.')
                 try:
                     ast.parse(lambda_str)
                     _ = lambda x : eval(lambda_str.replace('^', '**'))
                 except SyntaxError:
-                    raise SyntaxError(f'The lambda of {key} has invalid syntax')
+                    raise SyntaxError(f'El lambda de {key} tiene una sintaxis inválida')
 
                 if type(delta) != float and type(delta) != int:
-                    raise TypeError(f'Incorrect type delta {key}:{delta}')
+                    raise TypeError(f'El tipo del delta/paso es incorrecto ({key}:{delta})')
 
     def __has_lambda(self, value : dict):
         return set(value.keys()) == set(['lambda', 'delta'])
@@ -168,10 +168,10 @@ class LimitValueAnalysis:
             min_value = min(values)
             max_value = max(values)
             if min_value == max_value:
-                raise ValueError('minimun value must be greater than maximun value')
+                raise ValueError(f'Error, el valor mínimo debe ser mayor que el valor máximo. ({lambda_str})')
             return min_value, max_value
         except Exception as e:
-            raise  Exception(f'Error while trying to determine minimum and maximun value.')
+            raise  Exception(f'Error al intentar determinar el valor mínimo y máximo del lambda. ({lambda_str})')
         
 
     def __get_values_aux(self, Fn, min_value, max_value, delta):
