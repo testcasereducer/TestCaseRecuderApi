@@ -2,11 +2,6 @@
 
 from .arrays import orthogonal_arrays
 
-parameters = {
-    'param1' : [1,2,3, 4],
-    'param2' : ['A', 'B'],
-    'param3' : [100, 200, 300]
-}
 
 class OrthogonalArray:
     def __init__(self, parameters : dict):

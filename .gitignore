@@ -33,6 +33,8 @@ htmlcov/
 
 # Ignorar archivos y directorios específicos de la aplicación Flask
 instance/
+pasos
+
 
 # Ignorar archivos y directorios generados por el servidor de desarrollo Flask
 *.pid

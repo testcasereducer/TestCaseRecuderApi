@@ -28,7 +28,7 @@ class LimitValueAnalysis:
     """
         
     MIN_OPT_SIZE : int = 5 # operacion min. 'a<x<b' | 'a>x>b'
-    MAX_TIME : int = 3
+    MAX_TIME : int = 6
 
     def __init__(self, parameters : dict) -> None:
         """
@@ -133,7 +133,7 @@ class LimitValueAnalysis:
         for key, value in limits.items():
             self.__parameters[key] = {} 
             for value_key, value_value in value.items():
-                self.__parameters[key][value_key] = {'valid' : not 'invalid' in value_key, 'value' : value_value}
+                self.__parameters[key][value_key] = {'valido' : not 'invalid' in value_key, 'representante' : value_value}
 
         equivalence = EquivalencePartition(parameters=self.__parameters)
         return equivalence.build_test_cases()
@@ -244,7 +244,7 @@ class LimitValueAnalysis:
                     break
             number = round(number - delta, number_decimals)
 
-        assert first_min != None and second_max != None, 'Error getting values'
+        assert first_min != None and second_max != None, 'Error obteniendo los valores.'
 
         number = (second_max+first_min)//2
         while number > min_value:
@@ -258,11 +258,14 @@ class LimitValueAnalysis:
 
         signal.alarm(0)
 
-        return {'invalid_min': invalid_min,
-                'first_min': first_min, 
-                'second_min': second_min, 
-                'middle': middle_value, 
-                'first_max': first_max, 
-                'second_max': second_max,
-                'invalid_max': invalid_max}
+        return {
+                'valor_minimo_invalido': invalid_min,
+                'primer_valor_minimo': first_min, 
+                'segundo_valor_minimo': second_min, 
+                'valor_medio': middle_value, 
+                'primer_valor_maximo': first_max, 
+                'segundo_valor_maximo': second_max,
+                'valor_maximo_invalido': invalid_max
+            }
+
 

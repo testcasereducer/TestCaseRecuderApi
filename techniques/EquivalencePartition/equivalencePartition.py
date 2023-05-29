@@ -9,19 +9,19 @@ class EquivalencePartition(object):
         ------
         parameters : dict
             Un diccionario de parámetros con la siguiente estructura: 
-            { 'nombre_de_parametro_1': {'equivalencia_1': {'valid': bool, 'value': valor},
-                                        'equivalencia_2': {'valid': bool, 'value': valor},
+            { 'nombre_de_parametro_1': {'equivalencia_1': {'valido': bool, 'representante': valor},
+                                        'equivalencia_2': {'valido': bool, 'representante': valor},
                                         ...
-                                        'equivalencia_n': {'valid': bool, 'value': valor}},
-            'nombre_de_parametro_2': {'equivalencia_1': {'valid': bool, 'value': valor},
-                                        'equivalencia_2': {'valid': bool, 'value': valor},
+                                        'equivalencia_n': {'valido': bool, 'representante': valor}},
+            'nombre_de_parametro_2': {'equivalencia_1': {'valido': bool, 'representante': valor},
+                                        'equivalencia_2': {'valido': bool, 'representante': valor},
                                         ...
-                                        'equivalencia_n': {'valid': bool, 'value': valor}},
+                                        'equivalencia_n': {'valido': bool, 'representante': valor}},
             ...
-            'nombre_de_parametro_n': {'equivalencia_1': {'valid': bool, 'value': valor},
-                                        'equivalencia_2': {'valid': bool, 'value': valor},
+            'nombre_de_parametro_n': {'equivalencia_1': {'valido': bool, 'representante': valor},
+                                        'equivalencia_2': {'valido': bool, 'representante': valor},
                                         ...
-                                        'equivalencia_n': {'valid': bool, 'value': valor}}}
+                                        'equivalencia_n': {'valido': bool, 'representante': valor}}}
 
         filter_func : function, optional
             Una función que acepta un diccionario como argumento y devuelve un booleano que indica si
@@ -40,7 +40,7 @@ class EquivalencePartition(object):
         self.__n = len(parameters)
 
         assert callable(self.__filter_func), 'El filtro debe ser una función.'
-        assert self.__n >= 2,   'El número de parámetros debe ser mayor o igual a 2.'
+        #assert self.__n >= 2,   'El número de parámetros debe ser mayor o igual a 2.'
 
         self.__valid_parameters()
         
@@ -68,23 +68,23 @@ class EquivalencePartition(object):
             {
                 'nombre_del_parametro_1': {
                     'equiv_class': 'nombre_clase_equivalencia_1',
-                    'value': valor_clase_de_equivalencia_1
+                    'representante': valor_clase_de_equivalencia_1
                 },
                 'nombre_del_parametro_2': {
                     'equiv_class': 'nombre_clase_equivalencia_2',
-                    'value': valor_clase_de_equivalencia_2
+                    'representante': valor_clase_de_equivalencia_2
                 },
                 ...,
                 'nombre_del_parametro_n': {
                     'equiv_class': 'nombre_clase_equivalencia_n',
-                    'value': valor_clase_de_equivalencia_2
+                    'representante': valor_clase_de_equivalencia_2
                 }
             }
 
             Donde:
             - 'nombre_del_parametro_i': es el nombre del parámetro i-ésimo de la instancia de la clase.
             - 'equiv_class': es el nombre de la clase de equivalencia 
-            - 'value': es el valor del caso de prueba para el parámetro i-ésimo de la instancia de la clase.
+            - 'representante': es el valor del caso de prueba para el parámetro i-ésimo de la instancia de la clase.
 
                     
 
@@ -95,7 +95,7 @@ class EquivalencePartition(object):
         try:
             valid_test_cases = self.__generate_valid_test_cases()
             invalid_test_cases = self.__generate_invalid_test_cases()
-            tests = {'valids' : valid_test_cases, 'invalids' : invalid_test_cases}
+            tests = {'casos_validos' : valid_test_cases, 'casos_invalidos' : invalid_test_cases}
         except Exception as e:
             raise Exception(f'Error generando los casos de prueba: {e}')
 
@@ -119,10 +119,10 @@ class EquivalencePartition(object):
                 assert len(self.__parameters[var].keys()) > 0, 'No hay clases de equivalencia.'
                 for equiv_class_name in self.__parameters[var]:
                     equiv_class = self.__parameters[var][equiv_class_name]
-                    assert equiv_class.get('valid') != None, f'`El valor "es valido" de {equiv_class_name}` es None.'
-                    assert type(equiv_class['valid']) == bool, f'El tipo "es valido: de `{equiv_class_name}` no es un boolean.'
-                    assert equiv_class.get('value') != None, f'El valor de `{equiv_class_name}` es None.'
-                    assert equiv_class['value'] != "", f'El valor de `{equiv_class_name}` es vacio.'
+                    assert equiv_class.get('valido') != None, f'`El valor "es valido" de {equiv_class_name}` es None.'
+                    assert type(equiv_class['valido']) == bool, f'El tipo "es valido: de `{equiv_class_name}` no es un boolean.'
+                    assert equiv_class.get('representante') != None, f'El valor de `{equiv_class_name}` es None.'
+                    assert equiv_class['representante'] != "", f'El valor de `{equiv_class_name}` es vacio.'
             except AssertionError as e:
                 raise AssertionError(F'Error en `{var}`: {e}')
 
@@ -153,10 +153,10 @@ class EquivalencePartition(object):
                     test_cases.append(current_combination)
             else:
                 current_attribute = remaining_attributes[0]
-                items = list(filter(lambda x: x[1]['valid'] == True, self.__parameters[current_attribute].items()))
+                items = list(filter(lambda x: x[1]['valido'] == True, self.__parameters[current_attribute].items()))
                 for class_equivalent, class_value in items: 
                     new_combination = current_combination.copy()
-                    new_combination[current_attribute] = {'equiv_class' : class_equivalent, 'value' : class_value['value']}
+                    new_combination[current_attribute] = {'clase_equivalencia' : class_equivalent, 'representante' : class_value['representante']}
                     generate_combinations(remaining_attributes[1:], new_combination)
                      
         generate_combinations(self.__attribute_names, {})
@@ -186,12 +186,12 @@ class EquivalencePartition(object):
 
                 current_attribute = remaining_attributes[0]
 
-                items = list(filter(lambda x: x[1]['valid'] == valid, self.__parameters[current_attribute].items()))
+                items = list(filter(lambda x: x[1]['valido'] == valid, self.__parameters[current_attribute].items()))
                 items = items if not valid else [items[0]] 
 
                 for class_equiv, class_value in items:
                     new_combination = current_combination.copy()
-                    new_combination[current_attribute] = { 'equiv_class' : class_equiv, 'value' : class_value['value'] }
+                    new_combination[current_attribute] = { 'clase_equivalencia' : class_equiv, 'representante' : class_value['representante'] }
                     generate_combinations(remaining_attributes[1:], new_combination, valid=True)
 
         for _ in range(self.__n):

@@ -4,7 +4,7 @@ import os
 import time
 from functools import wraps
 import asyncio
-
+import signal
 # Third-party library imports
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, status
@@ -64,51 +64,59 @@ app.add_middleware(
 def api_key_required(f):
     @wraps(f)
     async def decorated_function(request: Request, *args, **kwargs):
-        api_key = request.query_params.get('api_key', '')
-        if not api_key or (api_key != master_apikey and api_key not in apikeys.get_all_api_keys()):
-            return JSONResponse(content={'error': 'API key inválida'}, status_code=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            data = await request.json()
+            api_key = data.get('apikey', '')
+            if not api_key or (api_key != master_apikey and api_key not in apikeys.get_all_api_keys()):
+                raise Exception('API key inválida')
+            
+        except Exception as e:
+            response = {
+                'error' : True,
+                'mensaje': str(e),
+                'tiempo-transcurrido' : '0.0'
+            }
+            return JSONResponse(content=response, status_code=status.HTTP_400_BAD_REQUEST)
+
+
         return await f(request, *args, **kwargs)
     return decorated_function
 
-@app.get('/api')
+@app.post('/api')
 @api_key_required
 async def process_request(request: Request):
-    technique = request.query_params.get('technique', '')
-    parameters = request.query_params.get('parameters', '')
-
-    if not technique or not parameters:
-        return JSONResponse(content={'error': 'Parámetros inválidos'}, status_code=status.HTTP_400_BAD_REQUEST)
-
-    try:
-        parameters = json.loads(parameters)
-    except json.JSONDecodeError:
-        return JSONResponse(content={'error': 'Entrada inválid'}, status_code=status.HTTP_400_BAD_REQUEST)
 
     start_time = time.time()
     test_cases = []
 
     try:
+        data =  await request.json()
+        technique = data.get('tecnica', '')
+        parameters = data.get('parametros', '')
 
-        if technique == 'EP':
+        parameters = dict(parameters)
+        if technique == 'PE':
             test_cases = EquivalencePartition(parameters).build_test_cases()
-        elif technique == 'LVA':
+        elif technique == 'AVL':
             test_cases = LimitValueAnalysis(parameters).build_test_cases()
-        elif technique == 'OA':
+        elif technique == 'AO':
             test_cases = OrthogonalArray(parameters).build_test_cases()
         else:
-            raise Exception(f"No se encontró la técnica: {technique}.")
+            raise Exception(f'No se encontró la técnica: {technique}.')
         
         response = {
             'error' : False,
-            'technique': technique,
-            'test-cases': test_cases,
-            'elapsed-time' : '{:.5f}'.format(time.time() - start_time)
+            'tecnica': technique,
+            'casos-pruebas': test_cases,
+            'tiempo-transcurrido' : '{:.5f}'.format(time.time() - start_time)
         }
     except Exception as e:
+        signal.alarm(0)
         response = {
             'error' : True,
-            'error-message': str(e),
-            'elapsed-time' : '{:.5f}'.format(time.time() - start_time)
+            'mensaje': str(e),
+            'tiempo-transcurrido' : '{:.5f}'.format(time.time() - start_time)
         }
 
     return JSONResponse(content=response, status_code=status.HTTP_200_OK)
