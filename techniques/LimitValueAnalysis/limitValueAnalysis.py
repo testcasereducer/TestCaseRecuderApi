@@ -28,7 +28,7 @@ class LimitValueAnalysis:
     """
         
     MIN_OPT_SIZE : int = 5 # operacion min. 'a<x<b' | 'a>x>b'
-    MAX_TIME : int = 6
+    MAX_TIME : int = 4
 
     def __init__(self, parameters : dict) -> None:
         """
@@ -72,11 +72,9 @@ class LimitValueAnalysis:
         """
         for key, value in self.__parameters.items():
             if self.__has_lambda(value):
-                try:
-                    lambda_str = value['lambda']
-                    delta = value['delta']
-                except KeyError:
-                    raise KeyError('Parámetro inválido. ')
+
+                lambda_str = value['lambda']
+                delta = value['delta']
                 
                 if type(lambda_str) != str:
                     raise TypeError(f'Tipo incorrecto {key}:{lambda_str}')
@@ -91,9 +89,11 @@ class LimitValueAnalysis:
                 if type(delta) != float and type(delta) != int:
                     raise TypeError(f'El tipo del delta/paso es incorrecto ({key}:{delta})')
 
-    def __has_lambda(self, value : dict):
-        return set(value.keys()) == set(['lambda', 'delta'])
-
+    def __has_lambda(self, value : dict): 
+        try:
+            return set(value.keys()) == set(['lambda', 'delta'])
+        except Exception as e:
+            raise ValueError(f'El objeto {value} debe tener la clave delta y lambda.')
     def build_limits(self):
 
         """

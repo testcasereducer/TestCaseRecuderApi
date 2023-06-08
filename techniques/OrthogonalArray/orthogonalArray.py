@@ -9,10 +9,11 @@ class OrthogonalArray:
         self.__parameters = parameters
         self.__orthogonal_arrays = orthogonal_arrays
 
+        self.__valide_parameteres()
+
         self.__num_factors = len(self.__parameters.keys())
         self.__max_level = len(max(self.__parameters.values(), key=len))
 
-        self.__valide_parameteres()
 
     def __err_get_L(self):
         """
@@ -69,8 +70,6 @@ class OrthogonalArray:
             for row in range(N):
                 idx = array[row][column] - 1
                 value = None
-                if idx < 0: 
-                    raise IndexError(f'Invalid idx {idx}')
                 if -1 < idx < len(values): value = values[idx] 
                 else: value = queue[0]; queue = queue[1:] + [queue[0]]
                 test_cases[row][column] =  value

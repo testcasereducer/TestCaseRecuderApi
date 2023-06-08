@@ -1,0 +1,24 @@
+\begin{table}[H]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|c|p{7cm}|c|}
+\hline
+\textbf{Funci\'on} & \textbf{Descripci\'on} & \textbf{Resultado}\\ \hline
+
+test\_array\_L11\_1  & ... & {\color[HTML]{009901} OK} \\ \hline 
+test\_array\_L4\_1  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_array\_L4\_2  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_array\_L8\_1  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_array\_L8\_2  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_array\_L9\_1  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_arreglo\_ortogonal\_fuera\_de\_rango  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_keys\_none  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_valores\_vacios  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_values\_none\_1  & ... & {\color[HTML]{009901} OK} \\ \hline
+test\_values\_none\_2  & ... & {\color[HTML]{009901} OK} \\ \hline
+
+\end{tabular}%
+}
+\caption{Casos de pruebas para partici\'on de equivalencia (unittest)}
+\label{tab:my-table}
+\end{table}

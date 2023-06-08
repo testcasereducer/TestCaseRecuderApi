@@ -9,19 +9,19 @@ class EquivalencePartition(object):
         ------
         parameters : dict
             Un diccionario de parámetros con la siguiente estructura: 
-            { 'nombre_de_parametro_1': {'equivalencia_1': {'valido': bool, 'representante': valor},
-                                        'equivalencia_2': {'valido': bool, 'representante': valor},
+            { 'nombre_de_parametro_1': {{'equivalencia_1': {'valido': bool, 'representante': valor},
+                                        'equivalencia_2': {'valido': bool, 'representante': valor}, ... },
                                         ...
                                         'equivalencia_n': {'valido': bool, 'representante': valor}},
-            'nombre_de_parametro_2': {'equivalencia_1': {'valido': bool, 'representante': valor},
-                                        'equivalencia_2': {'valido': bool, 'representante': valor},
+            'nombre_de_parametro_2': {{'equivalencia_1': {'valido': bool, 'representante': valor},
+                                        'equivalencia_2': {'valido': bool, 'representante': valor}, ... },
                                         ...
                                         'equivalencia_n': {'valido': bool, 'representante': valor}},
             ...
-            'nombre_de_parametro_n': {'equivalencia_1': {'valido': bool, 'representante': valor},
+            'nombre_de_parametro_n': {{'equivalencia_1': {'valido': bool, 'representante': valor},
                                         'equivalencia_2': {'valido': bool, 'representante': valor},
                                         ...
-                                        'equivalencia_n': {'valido': bool, 'representante': valor}}}
+                                        'equivalencia_n': {'valido': bool, 'representante': valor}, ... }
 
         filter_func : function, optional
             Una función que acepta un diccionario como argumento y devuelve un booleano que indica si
@@ -40,7 +40,6 @@ class EquivalencePartition(object):
         self.__n = len(parameters)
 
         assert callable(self.__filter_func), 'El filtro debe ser una función.'
-        #assert self.__n >= 2,   'El número de parámetros debe ser mayor o igual a 2.'
 
         self.__valid_parameters()
         
@@ -86,18 +85,12 @@ class EquivalencePartition(object):
             - 'equiv_class': es el nombre de la clase de equivalencia 
             - 'representante': es el valor del caso de prueba para el parámetro i-ésimo de la instancia de la clase.
 
-                    
-
-        Raises:
-        -------
-        Exception : Si hay un error durante la generación de casos de prueba.
         """
-        try:
-            valid_test_cases = self.__generate_valid_test_cases()
-            invalid_test_cases = self.__generate_invalid_test_cases()
-            tests = {'casos_validos' : valid_test_cases, 'casos_invalidos' : invalid_test_cases}
-        except Exception as e:
-            raise Exception(f'Error generando los casos de prueba: {e}')
+
+
+        valid_test_cases = self.__generate_valid_test_cases()
+        invalid_test_cases = self.__generate_invalid_test_cases()
+        tests = {'casos_validos' : valid_test_cases, 'casos_invalidos' : invalid_test_cases}
 
         return tests
 

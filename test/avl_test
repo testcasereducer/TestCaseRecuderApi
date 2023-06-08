@@ -1,0 +1,25 @@
+\begin{table}[H]
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{|c|p{7cm}|c|}
+    \hline
+    \textbf{Funci\'on} & \textbf{Descripci\'on} & \textbf{Resultado}\\ \hline
+
+    test\_generar\_limites\_1  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_generar\_limites\_3  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_generar\_limites\_con\_particion\_de\_equivalencias  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_generar\_limites\_timelimit  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_parametro\_invalido\_delta\_none  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_parametro\_invalido\_lambda\_incorrecto  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_parametro\_invalido\_lambda\_size  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_parametro\_invalido\_lambda\_syntaxError  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_parametro\_invalido\_lambda\_type  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_parametros\_invalidos\_1  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_parametros\_invalidos\_2  & ... & {\color[HTML]{009901} OK} \\ \hline 
+    test\_parametros\_validos  & ... & {\color[HTML]{009901} OK} \\ \hline 
+
+    \end{tabular}%
+    }
+    \caption{Casos de pruebas para partici\'on de equivalencia (unittest)}
+    \label{tab:my-table}
+\end{table}
