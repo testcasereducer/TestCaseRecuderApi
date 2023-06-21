@@ -47,9 +47,7 @@ origins = [
     "http://127.0.0.1",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:8000",
-    "https://test-case-recuder-front-end.vercel.app",
-    "test-case-recuder-front-end-git-main-testcasereducer.vercel.app",
-    "https://test-case-recuder-front-25xphy323-testcasereducer.vercel.app",
+    "https://testcasereducer.vercel.app",
     "*"
 ]
 
@@ -123,7 +121,6 @@ async def process_request(request: Request):
 
 
 @app.post('/api/create_user')
-@api_key_required
 async def create_user(request: Request, email: str):
     if request.query_params.get('api_key') != master_apikey:
         raise HTTPException(status_code=403, detail="API key maestra requerida")
@@ -177,4 +174,5 @@ async def send_api_key_email(email, api_key):
 
 
 if __name__ == "__main__":
+    print("[Init]")
     app.run(debug=True)

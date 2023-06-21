@@ -1,7 +1,7 @@
 
 class EquivalencePartition(object):
 
-    def __init__(self, parameters : dict, filter_func = lambda x : True):
+    def __init__(self, parameters : dict):
         """
         Constructor de la clase EquivalencePartition.
 
@@ -23,11 +23,6 @@ class EquivalencePartition(object):
                                         ...
                                         'equivalencia_n': {'valido': bool, 'representante': valor}, ... }
 
-        filter_func : function, optional
-            Una función que acepta un diccionario como argumento y devuelve un booleano que indica si
-            el diccionario cumple con ciertas condiciones. Por defecto, una función lambda que devuelve
-            True para cualquier entrada.
-
         Raises:
         -------
         Exception : Si se encuentra un error en los parámetros proporcionados.
@@ -36,10 +31,7 @@ class EquivalencePartition(object):
 
         self.__parameters = parameters
         self.__attribute_names = list(self.__parameters.keys())
-        self.__filter_func = filter_func
         self.__n = len(parameters)
-
-        assert callable(self.__filter_func), 'El filtro debe ser una función.'
 
         self.__valid_parameters()
         
